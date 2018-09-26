@@ -70,8 +70,7 @@ A simple zed camera driver which only use CPU and only publish left and right ra
 
 # TODO:
 
-1. add the launch file for stereo_proc.
-2. add the nodelet functionality.
+1. add camera calibration.
 
 # Transcend Robotics:
 Patented articulated traction control ARTI technology for stair climbing and obstacle traversal without complex software or controls
@@ -79,3 +78,4 @@ http://transcendrobotics.com/
 
 # Author:
 Di Zeng
+Ruihang Miao

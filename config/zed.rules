@@ -1,0 +1,2 @@
+# UVC cameras
+SUBSYSTEMS=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="2b03", ATTRS{idProduct}=="f582", MODE="0666",SYMLINK+="/dev/sensors/zed"

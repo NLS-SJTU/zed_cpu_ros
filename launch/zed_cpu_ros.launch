@@ -1,10 +1,11 @@
 <launch>
 <arg name="config_file_location" default="$(find zed_cpu_ros)/config/SN17505.conf"/>
+<arg name="output_config_xml" default="$(find zed_cpu_ros)/config/zed_calib.xml"/>
 <arg name="camera_namespace" default="camera"/>
 <!-- to find your device id, use ls /dev/ and look for the numbder after video -->
 <arg name="device_name" default="ZED"/>
 <arg name="resolution" default="2"/>
-<arg name="frame_rate" default="30"/>
+<arg name="frame_rate" default="60"/>
 <arg name="show_image" default="false"/>
 <arg name="encoding" default="bgr8"/>
 <arg name="use_zed_config" default="true"/>
@@ -13,6 +14,7 @@
 	<param name="resolution" value="$(arg resolution)" unless="$(eval resolution>3)"/>
 	<param name="frame_rate" value="$(arg frame_rate)"/>
 	<param name="config_file_location" value="$(arg config_file_location)"/>
+	<param name="output_config_xml" value="$(arg output_config_xml)"/>
 	<param name="show_image" value="$(arg show_image)"/>
 	<param name="left_frame_id" value="left_frame"/>
 	<param name="right_frame_id" value="right_frame"/>

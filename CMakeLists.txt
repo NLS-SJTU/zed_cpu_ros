@@ -16,9 +16,9 @@ find_package(catkin REQUIRED
 
 # find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED)
-find_package(OpenCV REQUIRED)
-#set(OpenCV_DIR "/home/mrh/workspace/OPENCVLIB/2.4.10")
-#find_package(OpenCV REQUIRED HINTS ${OpenCV_DIR} NO_DEFAULT_PATH)
+#find_package(OpenCV REQUIRED)
+set(OpenCV_DIR "/home/mrh/workspace/OPENCVLIB/2.4.10")
+find_package(OpenCV REQUIRED HINTS ${OpenCV_DIR} NO_DEFAULT_PATH)
 
 include_directories(
     include
@@ -41,8 +41,6 @@ catkin_package(
 # target_link_libraries(zed_cpu_ros ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${Boost_LIBRARIES})
 # add_dependencies(zed_cpu_ros arti_msgs_gencpp)
 
-message(${catkin_LIBRARIES})
-message(${OpenCV_LIBS})
 add_executable(zed_cpu_ros src/zed_cpu_ros.cpp)
 target_link_libraries(zed_cpu_ros ${OpenCV_LIBS} ${catkin_LIBRARIES}  ${Boost_LIBRARIES} )
 

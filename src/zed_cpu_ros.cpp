@@ -60,7 +60,7 @@ public:
     cv::Mat right_image;
     setResolution(resolution);
     // // this function doesn't work very well in current Opencv 2.4, so, just use ROS to control frame rate.
-     setFrameRate(frame_rate);
+//     setFrameRate(frame_rate);
 
     ROS_INFO("Stereo Camera Set Resolution %d, width %f, height %f", resolution, camera_->get(WIDTH_ID),
              camera_->get(HEIGHT_ID));
@@ -103,9 +103,11 @@ public:
 
     camera_->set(WIDTH_ID, width_);
     camera_->set(HEIGHT_ID, height_);
+
     // make sure that the number set are right from the hardware
     width_ = camera_->get(WIDTH_ID);
     height_ = camera_->get(HEIGHT_ID);
+
   }
 
   /**
@@ -172,6 +174,7 @@ public:
     private_nh.param("resolution", resolution_, 1);
     private_nh.param("frame_rate", frame_rate_, 30.0);
     private_nh.param("config_file_location", config_file_location_, std::string(""));
+    private_nh.param("output_config_xml", output_config_xml_, std::string(""));
     private_nh.param("left_frame_id", left_frame_id_, std::string("left_camera"));
     private_nh.param("right_frame_id", right_frame_id_, std::string("right_camera"));
     private_nh.param("show_image", show_image_, false);
@@ -321,10 +324,10 @@ public:
     double l_cy = pt.get<double>(left_str + reso_str + ".cy");
     double l_fx = pt.get<double>(left_str + reso_str + ".fx");
     double l_fy = pt.get<double>(left_str + reso_str + ".fy");
-    double l_new_cx = pt.get<double>(left_str + reso_str + ".new_cx");
-    double l_new_cy = pt.get<double>(left_str + reso_str + ".new_cy");
-    double l_new_fx = pt.get<double>(left_str + reso_str + ".new_fx");
-    double l_new_fy = pt.get<double>(left_str + reso_str + ".new_fy");
+//    double l_new_cx = pt.get<double>(left_str + reso_str + ".new_cx");
+//    double l_new_cy = pt.get<double>(left_str + reso_str + ".new_cy");
+//    double l_new_fx = pt.get<double>(left_str + reso_str + ".new_fx");
+//    double l_new_fy = pt.get<double>(left_str + reso_str + ".new_fy");
     double l_k1 = pt.get<double>(left_str + reso_str + ".k1");
     double l_k2 = pt.get<double>(left_str + reso_str + ".k2");
     // right value
@@ -332,10 +335,10 @@ public:
     double r_cy = pt.get<double>(right_str + reso_str + ".cy");
     double r_fx = pt.get<double>(right_str + reso_str + ".fx");
     double r_fy = pt.get<double>(right_str + reso_str + ".fy");
-    double r_new_cx = pt.get<double>(right_str + reso_str + ".new_cx");
-    double r_new_cy = pt.get<double>(right_str + reso_str + ".new_cy");
-    double r_new_fx = pt.get<double>(right_str + reso_str + ".new_fx");
-    double r_new_fy = pt.get<double>(right_str + reso_str + ".new_fy");
+//    double r_new_cx = pt.get<double>(right_str + reso_str + ".new_cx");
+//    double r_new_cy = pt.get<double>(right_str + reso_str + ".new_cy");
+//    double r_new_fx = pt.get<double>(right_str + reso_str + ".new_fx");
+//    double r_new_fy = pt.get<double>(right_str + reso_str + ".new_fy");
     double r_k1 = pt.get<double>(right_str + reso_str + ".k1");
     double r_k2 = pt.get<double>(right_str + reso_str + ".k2");
 
@@ -408,36 +411,36 @@ public:
     left_K.at<double>(1,2)=l_cy;
     left_K.at<double>(2,2)=1.0;
     left_info.K.fill(0.0);
-    left_info.K[0] = l_new_fx;
-    left_info.K[2] = l_new_cx;
-    left_info.K[4] = l_new_fy;
-    left_info.K[5] = l_new_cy;
+    left_info.K[0] = l_fx;
+    left_info.K[2] = l_cx;
+    left_info.K[4] = l_fy;
+    left_info.K[5] = l_cy;
     left_info.K[8] = 1.0;
-    new_left_K = cv::Mat::zeros(3,3,CV_64F);
-    new_left_K.at<double>(0,0)=l_new_fx;
-    new_left_K.at<double>(0,2)=l_new_cx;
-    new_left_K.at<double>(1,1)=l_new_fy;
-    new_left_K.at<double>(1,2)=l_new_cy;
-    new_left_K.at<double>(2,2)=1.0;
+//    new_left_K = cv::Mat::zeros(3,3,CV_64F);
+//    new_left_K.at<double>(0,0)=l_new_fx;
+//    new_left_K.at<double>(0,2)=l_new_cx;
+//    new_left_K.at<double>(1,1)=l_new_fy;
+//    new_left_K.at<double>(1,2)=l_new_cy;
+//    new_left_K.at<double>(2,2)=1.0;
 
     right_K = cv::Mat::zeros(3,3,CV_64F);
-    right_K.at<double>(0,0)=l_fx;
-    right_K.at<double>(0,2)=l_cx;
-    right_K.at<double>(1,1)=l_fy;
-    right_K.at<double>(1,2)=l_cy;
+    right_K.at<double>(0,0)=r_fx;
+    right_K.at<double>(0,2)=r_cx;
+    right_K.at<double>(1,1)=r_fy;
+    right_K.at<double>(1,2)=r_cy;
     right_K.at<double>(2,2)=1.0;
     right_info.K.fill(0.0);
-    right_info.K[0] = r_new_fx;
-    right_info.K[2] = r_new_cx;
-    right_info.K[4] = r_new_fy;
-    right_info.K[5] = r_new_cy;
+    right_info.K[0] = r_fx;
+    right_info.K[2] = r_cx;
+    right_info.K[4] = r_fy;
+    right_info.K[5] = r_cy;
     right_info.K[8] = 1.0;
-    new_right_K = cv::Mat::zeros(3,3,CV_64F);
-    new_right_K.at<double>(0,0)=r_new_fx;
-    new_right_K.at<double>(0,2)=r_new_cx;
-    new_right_K.at<double>(1,1)=r_new_fy;
-    new_right_K.at<double>(1,2)=r_new_cy;
-    new_right_K.at<double>(2,2)=1.0;
+//    new_right_K = cv::Mat::zeros(3,3,CV_64F);
+//    new_right_K.at<double>(0,0)=r_new_fx;
+//    new_right_K.at<double>(0,2)=r_new_cx;
+//    new_right_K.at<double>(1,1)=r_new_fy;
+//    new_right_K.at<double>(1,2)=r_new_cy;
+//    new_right_K.at<double>(2,2)=1.0;
     std::cout<<new_left_K<<std::endl;
     std::cout<<new_right_K<<std::endl;
 
@@ -448,7 +451,9 @@ public:
     right_info.R.fill(0.0);
     cv::Mat rvec = (cv::Mat_<double>(3, 1) << rx, ry, rz);
     cv::Mat rmat(3, 3, CV_64F);
-    cv::Rodrigues(rvec, rmat);
+    cv::Rodrigues(rvec, rmat);  
+    cv::Mat tvc = -rmat*(cv::Mat_<double>(3, 1) << baseline, 0, 0);
+
     int id = 0;
     cv::MatIterator_<double> it, end;
     for (it = rmat.begin<double>(); it != rmat.end<double>(); ++it, id++)
@@ -457,35 +462,70 @@ public:
       right_info.R[id] = *it;
     }
 
+    cv::Size image_size(width_,height_);
+    output_width_=640, output_height_=480;
+    cv::Size new_image_size(output_width_,output_height_);
+
+    cv::Mat R1,R2,P1,P2,Q;
+
+    cv::stereoRectify(left_K,left_D, right_K, right_D, image_size,
+                      rmat, tvc,  R1,  R2,  P1,  P2,  Q,
+                      cv::CALIB_ZERO_DISPARITY,0,new_image_size);
+
+
+    cv::initUndistortRectifyMap(left_K, left_D, R1,P1,new_image_size, CV_32FC1, left_map1, left_map2);
+    cv::initUndistortRectifyMap(right_K, right_D, R2, P2,new_image_size, CV_32FC1, right_map1, right_map2);
     // Projection/camera matrix
     //     [fx'  0  cx' Tx]
     // P = [ 0  fy' cy' Ty]
     //     [ 0   0   1   0]
     left_info.P.fill(0.0);
-    left_info.P[0] = l_new_fx;
-    left_info.P[2] = l_new_cx;
-    left_info.P[5] = l_new_fy;
-    left_info.P[6] = l_new_cy;
+    left_info.P[0] = P1.at<double>(0,0);
+    left_info.P[2] = P1.at<double>(0,2);
+    left_info.P[5] = P1.at<double>(1,1);
+    left_info.P[6] = P1.at<double>(1,2);
+    left_info.P[7] = P1.at<double>(1,3);
     left_info.P[10] = 1.0;
+    left_info.P[11] = P1.at<double>(2,3);
 
     right_info.P.fill(0.0);
-    right_info.P[0] = r_new_fx;
-    right_info.P[2] = r_new_cx;
-    right_info.P[3] = (-1 * l_new_fx * baseline);
-    right_info.P[5] = r_new_fy;
-    right_info.P[6] = r_new_cy;
+    right_info.P[0] = P2.at<double>(0,0);
+    right_info.P[2] = P2.at<double>(0,2);
+    right_info.P[3] = P2.at<double>(0,3);
+    right_info.P[5] = P2.at<double>(1,1);
+    right_info.P[6] = P2.at<double>(1,2);
+    right_info.P[7] = P2.at<double>(1,3);
     right_info.P[10] = 1.0;
+    right_info.P[11] = P2.at<double>(2,3);
 
-    left_info.width = right_info.width = width_;
-    left_info.height = right_info.height = height_;
+    left_info.width = right_info.width = output_width_;
+    left_info.height = right_info.height = output_height_;
 
     left_info.header.frame_id = left_frame_id_;
     right_info.header.frame_id = right_frame_id_;
 
-    cv::Size image_size(width_,height_);
+    cv::Mat M1,M2,D1,D2;
+    cv::Mat_<int> sizeM(2,1);
+    sizeM.at<int>(0)=output_width_;
+    sizeM.at<int>(1)=output_height_;
+    M1 = P1.rowRange(0,3).colRange(0,3);
+    M2 = P2.rowRange(0,3).colRange(0,3);
+    D1 = cv::Mat::zeros(5,1,CV_64F);
+    D2 = cv::Mat::zeros(5,1,CV_64F);
+    cv::FileStorage fswrite(output_config_xml_,cv::FileStorage::WRITE);
+    fswrite<<"M1"<<M1;
+    fswrite<<"D1"<<D1;
+    fswrite<<"M2"<<M2;
+    fswrite<<"D2"<<D2;
+    fswrite<<"R1"<<R1;
+    fswrite<<"R2"<<R2;
+    fswrite<<"P1"<<P1;
+    fswrite<<"P2"<<P2;
+    fswrite<<"Q"<<Q;
+    fswrite<<"size"<<sizeM;
+    fswrite.release();
 
-    cv::initUndistortRectifyMap(left_K, left_D, cv::Mat(),new_left_K,image_size, 0, left_map1, left_map2);
-    cv::initUndistortRectifyMap(right_K, right_D, cv::Mat(), new_right_K,image_size, 0, right_map1, right_map2);
+
   }
 
   /**
@@ -592,8 +632,10 @@ private:
   double frame_rate_;
   bool show_image_, use_zed_config_;
   double width_, height_;
+  double output_width_, output_height_;
   std::string left_frame_id_, right_frame_id_,device_name_;
   std::string config_file_location_;
+  std::string output_config_xml_;
   std::string encoding_;
 
   cv::Mat left_K,left_D;

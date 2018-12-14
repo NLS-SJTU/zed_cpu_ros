@@ -44,6 +44,9 @@ catkin_package(
 add_executable(zed_cpu_ros src/zed_cpu_ros.cpp)
 target_link_libraries(zed_cpu_ros ${OpenCV_LIBS} ${catkin_LIBRARIES}  ${Boost_LIBRARIES} )
 
+add_executable(stereo_undistort_ros src/stereo_undistort.cpp)
+target_link_libraries(stereo_undistort_ros ${OpenCV_LIBS} ${catkin_LIBRARIES}  ${Boost_LIBRARIES} )
+
 # install(TARGETS 
 #        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

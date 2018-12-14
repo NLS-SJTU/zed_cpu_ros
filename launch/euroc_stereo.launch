@@ -1,0 +1,21 @@
+<launch>
+<arg name="config_file_location" default="$(find zed_cpu_ros)/config/euroc_stereo.yaml"/>
+<arg name="output_config_xml" default="$(find zed_cpu_ros)/config/euroc_calib.xml"/>
+<arg name="camera_namespace" default="camera"/>
+<arg name="encoding" default="mono8"/>
+<arg name="show_image" default="false"/>
+
+<remap from="/imu" to="/imu0"/>
+
+<node pkg="zed_cpu_ros" type="stereo_undistort_ros" name="stereo_undistort_ros_node" output="screen" ns="$(arg camera_namespace)" required="true">
+	<param name="config_file_location" value="$(arg config_file_location)"/>
+	<param name="output_config_xml" value="$(arg output_config_xml)"/>
+	<param name="show_image" value="$(arg show_image)"/>
+	<param name="left_frame_id" value="left_frame"/>
+	<param name="right_frame_id" value="right_frame"/>
+	
+</node>
+
+
+
+</launch>

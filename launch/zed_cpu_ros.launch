@@ -1,5 +1,5 @@
 <launch>
-<arg name="config_file_location" default="$(find zed_cpu_ros)/config/SN17505.conf"/>
+<arg name="config_file_location" default="$(find zed_cpu_ros)/config/SN21077.conf"/>
 <arg name="output_config_xml" default="$(find zed_cpu_ros)/config/zed_calib.xml"/>
 <arg name="camera_namespace" default="camera"/>
 <!-- to find your device id, use ls /dev/ and look for the numbder after video -->
